@@ -5,6 +5,5 @@
 <p>This page will list all of the projects.</p>
 
 <% @all_projects.each do |project| %>
-  <p><%= project.title %></p>
-  <p><%= project.description %></p>
+  <p><a href="/projects/<%= project.id %>"</a><%= project.title %></p>
 <% end %>

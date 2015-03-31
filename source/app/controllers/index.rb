@@ -21,10 +21,6 @@ get '/projects' do
   erb :projects
 end
 
-get '/projects/new' do
-  erb :projects_new
-end
-
 post '/projects' do
   new_project = Project.create(title: params[:project_title], description: params[:project_description])
   if new_project.save
@@ -33,6 +29,19 @@ post '/projects' do
     "There was an error creating your project"
   end
 end
+
+get '/projects/new' do
+  erb :projects_new
+end
+
+get '/projects/:id' do
+  @this_project = Project.find(params[:id])
+  p @this_project
+
+  erb :project_id
+end
+
+
 
 
 ########################Implement signup
