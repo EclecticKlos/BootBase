@@ -1,0 +1,10 @@
+<br>
+<form action="/projects/new" method="GET">
+<input type="submit" value="Add a Project!">
+
+<p>This page will list all of the projects.</p>
+
+<% @all_projects.each do |project| %>
+  <p><%= project.title %></p>
+  <p><%= project.description %></p>
+<% end %>
