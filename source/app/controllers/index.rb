@@ -7,9 +7,13 @@ get '/' do
   erb :login
 end
 
+get '/project_list' do
+  erb :project_list
+end
+
 post '/login' do
-  if User.find(name: params[:name])
-    erb :project_list
+  if User.find_by(name: params[:name])
+    redirect '/project_list'
   else
     "incorrect name"
   end
