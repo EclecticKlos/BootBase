@@ -8,12 +8,32 @@ get '/' do
 end
 
 post '/login' do
-  if User.find(name: params[:name])
-    erb :project_list
+  if User.find_by(name: params[:name])
+    redirect '/projects'
   else
     "incorrect name"
   end
 end
+
+get '/projects' do
+  @all_projects = Project.all
+
+  erb :projects
+end
+
+get '/projects/new' do
+  erb :projects_new
+end
+
+post '/projects' do
+  new_project = Project.create(title: params[:project_title], description: params[:project_description])
+  if new_project.save
+    redirect '/projects'
+  else
+    "There was an error creating your project"
+  end
+end
+
 
 ########################Implement signup
 # post 'signup' do
