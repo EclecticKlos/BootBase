@@ -1,4 +1,5 @@
-require 'httparty'
+require 'byebug'
+require 'json'
 
 get '/' do
 ######################## implement with bcrypt
@@ -16,11 +17,13 @@ end
 
 get '/login-via-github' do
   session['github_oauth_state'] = SecureRandom.uuid
+  scopes_desired = "user:email,public_repo,gist,repo,read:repo_hook"
 
   url = URI.parse('https://github.com/login/oauth/authorize')
   url.query = {
     client_id: ENV['GITHUB_CLIENT_ID'],
     redirect_uri: to('/github/oauth/callback'),
+    scope: scopes_desired,
     state: session['github_oauth_state'],
   }.to_param
 
@@ -47,16 +50,8 @@ get '/github/oauth/callback' do
       redirect_uri: to('/projects'),
     },
   })
-  p response.body
-
-  # response = HTTParty.post(url)
-  # # "access_token=cb86bf5604102c8497c0d7843c6c71e0aa14a877&scope=&token_type=bearer"
-
-  # data = Hash[response.body.split('&').map{|pair| pair.split('=')}]
-  # # {"access_token"=>"cb86bf5604102c8497c0d7843c6c71e0aa14a877", "scope"=>nil, "token_type"=>"bearer"}
-
-  # p data['access_token']
-
+                        #See Sherif's alternative below
+  p response['access_token']
 
 
 
@@ -96,6 +91,14 @@ get '/projects/:id' do
 
   erb :project_id
 end
+
+  # response = HTTParty.post(url)
+  # # "access_token=cb86bf5604102c8497c0d7843c6c71e0aa14a877&scope=&token_type=bearer"
+
+  # data = Hash[response.body.split('&').map{|pair| pair.split('=')}]
+  # # {"access_token"=>"cb86bf5604102c8497c0d7843c6c71e0aa14a877", "scope"=>nil, "token_type"=>"bearer"}
+
+  # p data['access_token']
 
 
 
