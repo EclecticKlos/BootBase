@@ -35,21 +35,29 @@ get '/github/oauth/callback' do
   end
   # {"code"=>"f44844e0c8173c56f442", "state"=>"d8513d55-fd64-4592-acdc-5d37502ffce0"}
   # params.inspect
-  url = URI.parse('https://github.com/login/oauth/access_token')
-  url.query = {
+
+  response = HTTParty.post('https://github.com/login/oauth/access_token', {
+    :headers => {
+      "Accept" => "application/json"
+    },
+    :body => {
       client_id: ENV['GITHUB_CLIENT_ID'],
       client_secret: ENV['GITHUB_CLIENT_SECRET'],
       code: code,
       redirect_uri: to('/projects'),
-  }.to_param
+    },
+  })
+  p response.body
 
-  response = HTTParty.post(url)
-  # "access_token=cb86bf5604102c8497c0d7843c6c71e0aa14a877&scope=&token_type=bearer"
+  # response = HTTParty.post(url)
+  # # "access_token=cb86bf5604102c8497c0d7843c6c71e0aa14a877&scope=&token_type=bearer"
 
-  data = Hash[response.body.split('&').map{|pair| pair.split('=')}]
-  # {"access_token"=>"cb86bf5604102c8497c0d7843c6c71e0aa14a877", "scope"=>nil, "token_type"=>"bearer"}
+  # data = Hash[response.body.split('&').map{|pair| pair.split('=')}]
+  # # {"access_token"=>"cb86bf5604102c8497c0d7843c6c71e0aa14a877", "scope"=>nil, "token_type"=>"bearer"}
 
-  p data['access_token']
+  # p data['access_token']
+
+
 
 
 end
