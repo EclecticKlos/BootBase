@@ -1,7 +1,101 @@
-$(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
+// $(document).ready(function() {
+//   bindEvents();
+// });
 
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
-});
+// function bindEvents() {
+
+// }
+
+// var git_request = function(e){
+//   e.preventDefault()
+
+//   $.ajax({
+//     url:        'https://github.com/login/oauth.authorize'
+//     type:       'POST'
+//     dataType:   'json'
+//     data: {
+//       client_id=    '76e09f72b75dbea43129'
+//       redirect_uri= 'http://127.0.0.1:9393/projects'
+//       scope=        user:email,user:follow,repo,repo_deployment,red:repo_hook
+//       state=        'thisrandomestringofcharsxxxxxxaoeiCod2fgDo45iuRsd14fu'
+//     })
+//     .done(function(serverData){
+//       console.log(serverData)
+//     })
+//   }
+// })
+// }
+
+// // function bindEvents() {
+// //   $('#new-todo').on('submit',addTodo);
+// //   $('.delete').on('click', removeTodo);
+// //   $('.complete').on('click',completeTodo);
+// // }
+
+
+// // var addTodo = function(e){
+// //     e.preventDefault()
+
+// //   var formData = $(this).serialize()
+// //   $.ajax({
+// //     url: "/add_todo",
+// //     method: "POST",
+// //     data: formData
+// //   })
+// //   .done(function(serverData){
+// //     console.log(serverData.id)
+// //     $(".todo_list").append(buildTodo(serverData));
+// //   })
+// //   .fail(function(){
+// //     console.log("fail")
+// //   })
+
+// // }
+
+// // var removeTodo = function(e){
+// //   e.preventDefault()
+
+// //   var todoToDelete= $(this).closest("div");
+
+// //   $.ajax({
+// //     url: $(this).attr('href'),
+// //     method: "DELETE",
+// //   })
+// //   .done(function(){
+// //     todoToDelete.remove();
+// //   })
+// //   .fail(function(){
+// //     console.log("fail")
+// //   })
+// // }
+
+// // var completeTodo = function(e){
+// //   e.preventDefault()
+
+// //   var todoToComplete = $(this).closest('div')
+// //   $.ajax({
+// //     url: $(this).attr('href'),
+// //     method: "PUT",
+// //   })
+// //   .done(function(serverData){
+// //     alert("Completed " + serverData.todo_content)
+// //   })
+// //   .fail(function(){
+// //     console.log("fail")
+// //   })
+// // }
+
+// // function buildTodo(todoName) {
+// //   var todoTemplate = $.trim($('#todo_template').html());
+// //   // gets todoTemplate stored in DOM.
+// //   var $todo = $(todoTemplate);
+// //   // Creates an jQueryDOMElement from the todoTemplate.
+// //   $todo.find('h2').text(todoName.todo_content);
+// //   $todo.find('.delete').attr("href", "/delete/" + todoName.id)
+// //        .on('click', removeTodo)
+// //   $todo.find('.complete').attr("href", "/complete/" + todoName.id)
+// //        .on('click', completeTodo)
+// //   // Modifies it's text to use the passed in todoName.
+// //   return $todo;
+// //   // Returns the jQueryDOMElement to be used elsewhere.
+// // }
