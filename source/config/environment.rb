@@ -4,12 +4,17 @@
 ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
 
 require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
-
+begin
+  require 'dotenv'
+  Dotenv.load
+rescue LoadError
+end
 # Require gems we care about
 require 'rubygems'
 
 require 'uri'
 require 'pathname'
+require 'httparty'
 
 require 'pg'
 require 'active_record'
