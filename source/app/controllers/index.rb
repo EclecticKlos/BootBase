@@ -26,7 +26,6 @@ get '/login-via-github' do
     scope: scopes_desired,
     state: session['github_oauth_state'],
   }.to_param
-
   redirect url.to_s
 end
 
@@ -39,8 +38,10 @@ get '/github/oauth/callback' do
   # {"code"=>"f44844e0c8173c56f442", "state"=>"d8513d55-fd64-4592-acdc-5d37502ffce0"}
   # params.inspect
 
+
   response = HTTParty.post('https://github.com/login/oauth/access_token', {
     :headers => {
+      "User-Agent" => "BootBase",
       "Accept" => "application/json"
     },
     :body => {
@@ -51,11 +52,20 @@ get '/github/oauth/callback' do
     },
   })
                         #See Sherif's alternative below
-  p response['access_token']
+  user_token = response['access_token']
+    p "HERE" * 100
+  p user_token
 
-
+  user_info = HTTParty.get('https://api.github.com/user', {
+    :headers => {
+      "User-Agent" => "BootBase",
+      "Authorization" => "token #{user_token}"
+    }
+  })
+  p user_info.body
 
 end
+
 
 post '/login' do
   if User.find_by(name: params[:name])
