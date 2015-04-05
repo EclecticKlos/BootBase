@@ -1,4 +1,5 @@
 require 'byebug'
+require 'rubygems'
 require 'json'
 
 get '/' do
@@ -15,6 +16,7 @@ end
 # post 'signup' do
 # end
 
+
 get '/login-via-github' do
   session['github_oauth_state'] = SecureRandom.uuid
   scopes_desired = "user:email,public_repo,gist,repo,read:repo_hook"
@@ -22,7 +24,8 @@ get '/login-via-github' do
   url = URI.parse('https://github.com/login/oauth/authorize')
   url.query = {
     client_id: ENV['GITHUB_CLIENT_ID'],
-    redirect_uri: to('/github/oauth/callback'),
+    # redirect_uri: to('/github/oauth/callback'),
+    redirect_uri: ('http://127.0.0.1:9393/github/oauth/callback'),
     scope: scopes_desired,
     state: session['github_oauth_state'],
   }.to_param
@@ -38,7 +41,6 @@ get '/github/oauth/callback' do
   # {"code"=>"f44844e0c8173c56f442", "state"=>"d8513d55-fd64-4592-acdc-5d37502ffce0"}
   # params.inspect
 
-
   response = HTTParty.post('https://github.com/login/oauth/access_token', {
     :headers => {
       "User-Agent" => "BootBase",
@@ -53,8 +55,6 @@ get '/github/oauth/callback' do
   })
                         #See Sherif's alternative below
   user_token = response['access_token']
-    p "HERE" * 100
-  p user_token
 
   user_info = HTTParty.get('https://api.github.com/user', {
     :headers => {
@@ -62,8 +62,8 @@ get '/github/oauth/callback' do
       "Authorization" => "token #{user_token}"
     }
   })
-  p user_info.body
-
+  JSON.parse(user_info.body)['id']
+  p "*" * 80
 end
 
 

@@ -1,6 +1,6 @@
 
 Questions for Jared:
-- Oauth github example appending "query" vs .query?
+- Why did I have to comment out line 26 "to()" method and hardcode the callback uri?
 -
 
 

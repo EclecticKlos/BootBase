@@ -98,6 +98,7 @@ DEPENDENCIES
   factory_girl
   faker
   httparty
+  json
   pg
   rack-test
   rake
