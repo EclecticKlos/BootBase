@@ -101,18 +101,25 @@ get '/projects' do
   erb :projects
 end
 
-# get '/projects' do
-#   new_project = Project.create(title: params[:project_title], description: params[:project_description])
-#   if new_project.save
-#     redirect '/projects'
-#   else
-#     "There was an error creating your project"
-#   end
-# end
-
 get '/projects/new' do
   erb :projects_new
 end
+
+post '/projects' do
+  project_owner = User.find_by(github_id: session[:github_id])
+  new_project = Project.create(
+    title: params[:project_title],
+    description: params[:project_description],
+    user_id: project_owner.id,
+    # belongs_to: session[:github_id]
+    )
+  if new_project.save
+    redirect '/projects'
+  else
+    "There was an error creating your project"
+  end
+end
+
 
 get '/projects/:id' do
   @this_project = Project.find(params[:id])
