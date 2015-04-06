@@ -1,8 +1,8 @@
 require 'faker'
 
 
-User.create(name: "Dan")
+User.create(username: "Dan")
 
 10.times do
-  User.create(name: Faker::Name.name)
+  User.create(username: Faker::Name.name)
 end

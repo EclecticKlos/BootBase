@@ -62,8 +62,27 @@ get '/github/oauth/callback' do
       "Authorization" => "token #{user_token}"
     }
   })
-  JSON.parse(user_info.body)['id']
+  parsed_body = JSON.parse(user_info.body)
+  user_github_id = parsed_body['id']
+  username = parsed_body['login']
+  inquiring_user = User.find_by(github_id: user_github_id)
   p "*" * 80
+  if  inquiring_user
+    session[:github_token] = user_token
+    session[:github_id] = user_github_id
+    session[:username] = username
+  else
+    User.create(
+      github_id:      user_github_id,
+      username:       username,
+      auth_token:     user_token,
+      )
+    session[:github_token] = user_token
+    session[:github_id] = user_github_id
+    session[:username] = username
+  end
+
+  redirect '/projects'
 end
 
 
@@ -76,20 +95,20 @@ post '/login' do
 end
 
 get '/projects' do
-  params.inspect
-  # @all_projects = Project.all
+  # params.inspect
+  @all_projects = Project.all
 
   erb :projects
 end
 
-get '/projects' do
-  new_project = Project.create(title: params[:project_title], description: params[:project_description])
-  if new_project.save
-    redirect '/projects'
-  else
-    "There was an error creating your project"
-  end
-end
+# get '/projects' do
+#   new_project = Project.create(title: params[:project_title], description: params[:project_description])
+#   if new_project.save
+#     redirect '/projects'
+#   else
+#     "There was an error creating your project"
+#   end
+# end
 
 get '/projects/new' do
   erb :projects_new
