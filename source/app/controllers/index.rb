@@ -82,18 +82,6 @@ get '/github/oauth/callback' do
     session[:username] = username
   end
 
-        ######## MOVING THIS TO POST PROJECTS ROUTE--DELETE ONCE WORKING
-  #   #From copy button: BootBase/source/app/controllers/index.rb
-  #   #Needed for API:   BootBase/contents/source/app/controllers/index.rb
-  # repo_content = HTTParty.get('https://api.github.com/repos/EclecticKlos/BootBase/contents/source/app/controllers/index.rb', {
-  #   :headers => {
-  #     "User-Agent" => "BootBase",
-  #     "Authorization" => "token #{user_token}"
-  #   }
-  #   })
-  # # debugger
-  # p repo_content.body
-
   redirect '/projects'
 end
 
@@ -119,25 +107,25 @@ end
 #   Append to beginning of url: https://api.github.com/repos/EclecticKlos/BootBase
 #   #From copy button:          BootBase/source/app/controllers/index.rb
 #   #Needed for API:            BootBase/contents/source/app/controllers/index.rb
+# "https://api.github.com/repos/EclecticKlos/BootBase/contents/source/app/controllers/index.rb"
 post '/projects' do
   project_code_url_array = params[:code_url].split('/')
   project_owner = User.find_by(github_id: session[:github_id])
   formatted_code_url = "https://api.github.com/repos/" + project_owner.username + "/" + project_code_url_array.shift + "/contents/" + project_code_url_array.join("/")
   p formatted_code_url
-  # repo_content = HTTParty.get('', {
-  #   :headers => {
-  #     "User-Agent" => "BootBase",
-  #     "Authorization" => "token #{user_token}"
-  #   }
-  #   })
-  # debugger
-  # p repo_content.body
+  repo_content = HTTParty.get( formatted_code_url, {
+    :headers => {
+      "User-Agent" => "BootBase",
+      "Authorization" => "token #{session[:github_token]}"
+    }
+    })
+  parsed_content = JSON.parse(repo_content.body)["content"]
+  decoded_content = Base64.decode64(parsed_content)
   new_project = Project.create(
     title: params[:project_title],
     description: params[:project_description],
     user_id: project_owner.id,
-    # user_project_code:
-    # belongs_to: session[:github_id]
+    user_project_code:decoded_content
     )
   if new_project.save
     redirect '/projects/' + new_project.id.to_s
