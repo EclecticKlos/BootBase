@@ -82,6 +82,8 @@ get '/github/oauth/callback' do
     session[:username] = username
   end
 
+#From copy button: BootBase/source/app/controllers/index.rb
+#Needed for API:   BootBase/contents/source/app/controllers/index.rb
   repo_content = HTTParty.get('https://api.github.com/repos/EclecticKlos/BootBase/contents/source/app/controllers/index.rb', {
     :headers => {
       "User-Agent" => "BootBase",
