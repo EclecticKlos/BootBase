@@ -62,12 +62,12 @@ get '/github/oauth/callback' do
       "Authorization" => "token #{user_token}"
     }
   })
+
   parsed_body = JSON.parse(user_info.body)
   user_github_id = parsed_body['id']
   username = parsed_body['login']
   inquiring_user = User.find_by(github_id: user_github_id)
-  p "*" * 80
-  if  inquiring_user
+  if inquiring_user
     session[:github_token] = user_token
     session[:github_id] = user_github_id
     session[:username] = username
@@ -82,9 +82,17 @@ get '/github/oauth/callback' do
     session[:username] = username
   end
 
+  repo_content = HTTParty.get('https://api.github.com/repos/EclecticKlos/BootBase/contents/source/app/controllers/index.rb', {
+    :headers => {
+      "User-Agent" => "BootBase",
+      "Authorization" => "token #{user_token}"
+    }
+    })
+  # debugger
+  p repo_content.body
+
   redirect '/projects'
 end
-
 
 post '/login' do
   if User.find_by(name: params[:name])
@@ -106,6 +114,7 @@ get '/projects/new' do
 end
 
 post '/projects' do
+  #TODO: SEE PIVOTALTRACKER FOR SPECIFICS
   project_owner = User.find_by(github_id: session[:github_id])
   new_project = Project.create(
     title: params[:project_title],
@@ -114,7 +123,7 @@ post '/projects' do
     # belongs_to: session[:github_id]
     )
   if new_project.save
-    redirect '/projects'
+    redirect '/projects/' + new_project.id.to_s
   else
     "There was an error creating your project"
   end
