@@ -82,16 +82,17 @@ get '/github/oauth/callback' do
     session[:username] = username
   end
 
-#From copy button: BootBase/source/app/controllers/index.rb
-#Needed for API:   BootBase/contents/source/app/controllers/index.rb
-  repo_content = HTTParty.get('https://api.github.com/repos/EclecticKlos/BootBase/contents/source/app/controllers/index.rb', {
-    :headers => {
-      "User-Agent" => "BootBase",
-      "Authorization" => "token #{user_token}"
-    }
-    })
-  # debugger
-  p repo_content.body
+        ######## MOVING THIS TO POST PROJECTS ROUTE--DELETE ONCE WORKING
+  #   #From copy button: BootBase/source/app/controllers/index.rb
+  #   #Needed for API:   BootBase/contents/source/app/controllers/index.rb
+  # repo_content = HTTParty.get('https://api.github.com/repos/EclecticKlos/BootBase/contents/source/app/controllers/index.rb', {
+  #   :headers => {
+  #     "User-Agent" => "BootBase",
+  #     "Authorization" => "token #{user_token}"
+  #   }
+  #   })
+  # # debugger
+  # p repo_content.body
 
   redirect '/projects'
 end
@@ -115,13 +116,27 @@ get '/projects/new' do
   erb :projects_new
 end
 
+#   Append to beginning of url: https://api.github.com/repos/EclecticKlos/BootBase
+#   #From copy button:          BootBase/source/app/controllers/index.rb
+#   #Needed for API:            BootBase/contents/source/app/controllers/index.rb
 post '/projects' do
-  #TODO: SEE PIVOTALTRACKER FOR SPECIFICS
+  project_code_url_array = params[:code_url].split('/')
   project_owner = User.find_by(github_id: session[:github_id])
+  formatted_code_url = "https://api.github.com/repos/" + project_owner.username + "/" + project_code_url_array.shift + "/contents/" + project_code_url_array.join("/")
+  p formatted_code_url
+  # repo_content = HTTParty.get('', {
+  #   :headers => {
+  #     "User-Agent" => "BootBase",
+  #     "Authorization" => "token #{user_token}"
+  #   }
+  #   })
+  # debugger
+  # p repo_content.body
   new_project = Project.create(
     title: params[:project_title],
     description: params[:project_description],
     user_id: project_owner.id,
+    # user_project_code:
     # belongs_to: session[:github_id]
     )
   if new_project.save
