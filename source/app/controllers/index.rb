@@ -1,5 +1,4 @@
 require 'byebug'
-require 'rubygems'
 require 'json'
 require 'coderay'
 
