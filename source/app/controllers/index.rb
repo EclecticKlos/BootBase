@@ -1,6 +1,7 @@
 require 'byebug'
 require 'rubygems'
 require 'json'
+require 'coderay'
 
 get '/' do
 ######################## implement with bcrypt
@@ -119,13 +120,18 @@ post '/projects' do
       "Authorization" => "token #{session[:github_token]}"
     }
     })
+  p repo_content.body
+
   parsed_content = JSON.parse(repo_content.body)["content"]
   decoded_content = Base64.decode64(parsed_content)
+
+  # p decoded_content.to_html
+
   new_project = Project.create(
     title: params[:project_title],
     description: params[:project_description],
     user_id: project_owner.id,
-    user_project_code:decoded_content
+    user_project_code: decoded_content
     )
   if new_project.save
     redirect '/projects/' + new_project.id.to_s
@@ -137,7 +143,8 @@ end
 
 get '/projects/:id' do
   @this_project = Project.find(params[:id])
-  p @this_project
+
+  p @html = CodeRay.scan(@this_project.user_project_code, :ruby).div(:line_numbers => :table)
 
   erb :project_id
 end
