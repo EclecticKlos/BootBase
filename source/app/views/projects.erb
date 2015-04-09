@@ -2,8 +2,14 @@
 <form action="/projects/new" method="GET">
 <input type="submit" value="Add a Project!">
 
-<p>This page will list all of the projects.</p>
+<h1>Project List</h1>
 
-<% @all_projects.each do |project| %>
-  <p><a href="/projects/<%= project.id %>"</a><%= project.title %></p>
+<% @all_projects.reverse.each do |project| %>
+  <% this_projects_tags = project.tags %>
+  <p>
+    <a href="/projects/<%= project.id %>"</a><%= project.title %>
+    <% this_projects_tags.each do |tag| %>
+      <h6><%= tag.name %></h6>
+    <% end %>
+  </p>
 <% end %>

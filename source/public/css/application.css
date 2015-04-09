@@ -1,0 +1,5 @@
+.code {
+  height: 65vh;
+  /*width: 1200px;*/
+  overflow-y: scroll;
+}

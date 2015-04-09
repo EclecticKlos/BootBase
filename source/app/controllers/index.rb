@@ -142,10 +142,17 @@ end
 
 get '/projects/:id' do
   @this_project = Project.find(params[:id])
-
-  p @html = CodeRay.scan(@this_project.user_project_code, :ruby).div(:line_numbers => :table)
+  @this_projects_tags = @this_project.tags
+  @html = CodeRay.scan(@this_project.user_project_code, :ruby).div(:line_numbers => :table)
 
   erb :project_id
+end
+
+post '/projects/:id' do
+  @this_project = Project.find(params[:id])
+  @this_project.tags.create(name: params[:new_tag])
+
+  redirect "/projects/#{@this_project.id}"
 end
 
   # response = HTTParty.post(url)
