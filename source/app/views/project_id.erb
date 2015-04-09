@@ -1,4 +1,18 @@
 
-<h3><%= @this_project.title %></h3>
+<h3>Project Title:  <%= @this_project.title %></h3>
+
 <p><%= @this_project.description %></p>
-<%= @html %>
+
+<% @this_projects_tags.each do |tag| %>
+<h1><%= tag.name %></h1>
+<% end %>
+
+<form action="/projects/<%= @this_project.id %>" method="POST">
+Add a tag:
+<input type="text" name="new_tag"> <br>
+<input type="submit" value="Add a tag">
+
+<div class="code">
+  <%= @html %>
+</div>
+
