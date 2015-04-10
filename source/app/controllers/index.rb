@@ -97,7 +97,11 @@ get '/projects' do
   # params.inspect
   @all_projects = Project.all
 
-  erb :projects
+  if request.xhr?
+    erb :projects, layout: false
+  else
+    erb :projects
+  end
 end
 
 get '/projects/new' do

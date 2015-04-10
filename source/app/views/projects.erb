@@ -7,9 +7,10 @@
 <% @all_projects.reverse.each do |project| %>
   <% this_projects_tags = project.tags %>
   <p>
-    <a href="/projects/<%= project.id %>"</a><%= project.title %>
+    <a href="/projects/<%= project.id %>"><%= project.title %></a>
     <% this_projects_tags.each do |tag| %>
       <h6><%= tag.name %></h6>
     <% end %>
   </p>
 <% end %>
+
