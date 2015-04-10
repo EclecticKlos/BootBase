@@ -96,10 +96,16 @@ end
 get '/projects' do
   # params.inspect
   @all_projects = Project.all
+  @tags = Tag.all
+  p "$" * 100
+  p @tags
 
   if request.xhr?
     erb :projects, layout: false
+
+    # @tags.to_json
   else
+    @tags
     erb :projects
   end
 end

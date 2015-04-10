@@ -1,9 +1,9 @@
 
 $(document).ready(function(){
 
-  $('.project-search').on('keydown', function(event){
-    var query = $(this).val()
-    console.log();
+  $('.project-search').on('keyup', function(event){
+    var query = $(this).val();
+    console.log(query);
 
     searchForProjects(query)
 
@@ -16,28 +16,29 @@ $(document).ready(function(){
       data: {query: query},
     });
     request.done(function(projects){
-      $('.project-search-results').html(project);
-    });
-  }
-
-
-  var getProjectList = function(event){
-    // event.preventDefault();
-    var request = $.ajax({
-      url: '/projects',
-      type: 'GET',
-    });
-   console.log("hello")
-    request.done(function(data){
-      console.log(data)
-      $('body').append(data)
+      console.log(projects)
+      // $('.project-search-results').html(projects)
     })
-  };
-
-
-  // getProjectList();
-
+  }
 })
+
+
+  // var getProjectList = function(event){
+  //   // event.preventDefault();
+  //   var request = $.ajax({
+  //     url: '/projects',
+  //     type: 'GET',
+  //   });
+  //  console.log("hello")
+  //   request.done(function(data){
+  //     console.log(data)
+  //     $('body').append(data)
+  //   })
+  // };
+
+
+  // // getProjectList();
+
 
 
 
