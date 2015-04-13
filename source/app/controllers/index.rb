@@ -97,8 +97,10 @@ get '/projects' do
   # params.inspect
   @all_projects = Project.all
   @tags = Tag.all
+  query = (params[:query] || '').downcase
+  p @tags.where("lower(name) LIKE ? ","%#{query}%")
   p "$" * 100
-  p @tags
+  # p params[:query]
 
   if request.xhr?
     erb :projects, layout: false

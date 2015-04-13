@@ -3,7 +3,7 @@ $(document).ready(function(){
 
   $('.project-search').on('keyup', function(event){
     var query = $(this).val();
-    console.log(query);
+    // console.log(query);
 
     searchForProjects(query)
 
