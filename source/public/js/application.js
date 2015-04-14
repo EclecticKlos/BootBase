@@ -1,3 +1,102 @@
+
+$(document).ready(function(){
+
+  $('.project-search').on('keyup', function(event){
+    var query = $(this).val();
+    // console.log(query);
+
+    searchForProjects(query)
+
+
+  })
+
+  searchForProjects = function(query){
+    var request = $.ajax({
+      url: '/projects',
+      type: 'GET',
+      data: {query: query},
+    });
+    request.done(function(projects){
+      console.log(projects)
+      $('.project-search-results').html(projects)
+    })
+  }
+})
+
+
+
+
+
+
+
+  // var getProjectList = function(event){
+  //   // event.preventDefault();
+  //   var request = $.ajax({
+  //     url: '/projects',
+  //     type: 'GET',
+  //   });
+  //  console.log("hello")
+  //   request.done(function(data){
+  //     console.log(data)
+  //     $('body').append(data)
+  //   })
+  // };
+
+
+  // // getProjectList();
+
+
+
+
+
+
+
+
+// $(document).ready(function(){
+
+//   var updateClock = function(){
+//     var request = $.ajax({
+//       url: '/current-time',
+//       type: 'GET',
+//     });
+
+//     request.done(function(data){
+//       $('.clock').text(data);
+//     });
+//   }
+
+//   setInterval(updateClock, 1000);
+
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // $(document).ready(function() {
 //   bindEvents();
 // });

@@ -95,9 +95,16 @@ end
 
 get '/projects' do
   # params.inspect
-  @all_projects = Project.all
-
-  erb :projects
+  @tags = Tag.all
+  if request.xhr?
+    @tags = Tag.fuzzy_search(params[:query]).includes(:project)
+    p @all_projects = @tags.map(&:project)
+    erb :projects_bare_bones, layout: false
+  else
+    @tags
+    @all_projects = Project.all
+    erb :projects
+  end
 end
 
 get '/projects/new' do
