@@ -95,19 +95,14 @@ end
 
 get '/projects' do
   # params.inspect
-  @all_projects = Project.all
   @tags = Tag.all
-  query = (params[:query] || '').downcase
-  p @tags.where("lower(name) LIKE ? ","%#{query}%")
-  p "$" * 100
-  # p params[:query]
-
   if request.xhr?
-    erb :projects, layout: false
-
-    # @tags.to_json
+    @tags = Tag.fuzzy_search(params[:query]).includes(:project)
+    p @all_projects = @tags.map(&:project)
+    erb :projects_bare_bones, layout: false
   else
     @tags
+    @all_projects = Project.all
     erb :projects
   end
 end

@@ -7,6 +7,7 @@ $(document).ready(function(){
 
     searchForProjects(query)
 
+
   })
 
   searchForProjects = function(query){
@@ -17,7 +18,7 @@ $(document).ready(function(){
     });
     request.done(function(projects){
       console.log(projects)
-      // $('.project-search-results').html(projects)
+      $('.project-search-results').html(projects)
     })
   }
 })

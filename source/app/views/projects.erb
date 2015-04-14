@@ -1,21 +1,17 @@
 <br>
 <form action="/projects/new" method="GET">
 <input type="submit" value="Add a Project!">
+</form>
 
 <h1>Project List</h1>
 
 <div >
+  <form action="/projects" method="GET">
   Search Tags:<input class="project-search" type="text" />
+  <input type="submit" value="Search">
+</form>
 </div>
-<div class="project-search-results"></div>
-
-<% @all_projects.reverse.each do |project| %>
-  <% this_projects_tags = project.tags %>
-  <p>
-    <a href="/projects/<%= project.id %>"><%= project.title %></a>
-    <% this_projects_tags.each do |tag| %>
-      <h6><%= tag.name %></h6>
-    <% end %>
-  </p>
-<% end %>
+<div class="project-search-results">
+  <%= erb :projects_bare_bones %>
+</div>
 
