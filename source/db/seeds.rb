@@ -1,12 +1,12 @@
 require 'faker'
 file = File.open("/Users/apprentice/Desktop/klos/BootBase/source/app/controllers/index.rb")
 contents = file.read
-dan = User.create(
-  username: "Dan",
-  )
 
 10.times do
-  user = User.create(username: Faker::Name.name)
+  user = User.create(
+    username:     Faker::Name.name,
+    user_avatar_url:   "http://cmxhub.com/wp-content/uploads/2014/12/dbc.png",
+    )
   3.times do
     project = user.projects.create(
       title:              Faker::Lorem.sentence,
@@ -22,6 +22,10 @@ dan = User.create(
   end
 end
 
+dan = User.create(
+  username:   "Dan",
+  github_id:  8242788,
+  )
 1.times do
   project = dan.projects.create(
     title:              "Dan's Example Project",

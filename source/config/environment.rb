@@ -12,6 +12,11 @@ end
 # Require gems we care about
 require 'rubygems'
 
+begin
+  require 'pry-debugger'
+rescue LoadError
+end
+
 require 'uri'
 require 'pathname'
 require 'httparty'

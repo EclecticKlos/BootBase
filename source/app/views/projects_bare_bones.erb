@@ -1,8 +1,12 @@
 <% @all_projects.reverse.each do |project| %>
-  <% this_projects_tags = project.tags %>
+  <h3><%= project.title %></h3>
   <p>
+    <div class="profile-container">
+      <img class="profile-pic-img" src="<%= project.user.user_avatar_url %>">
+      <a href=""><%= project.user.username %></a>
+    </div>
     <a href="/projects/<%= project.id %>"><%= project.title %></a>
-    <% this_projects_tags.each do |tag| %>
+    <% project.tags.each do |tag| %>
       <h6><%= tag.name %></h6>
     <% end %>
   </p>
