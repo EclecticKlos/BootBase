@@ -33,4 +33,5 @@ group :test, :development do
   gem 'byebug'
   gem 'dotenv'
   gem 'awesome_print'
+  gem 'pry-debugger'
 end

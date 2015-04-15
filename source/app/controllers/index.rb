@@ -66,17 +66,22 @@ get '/github/oauth/callback' do
   parsed_body = JSON.parse(user_info.body)
   user_github_id = parsed_body['id']
   username = parsed_body['login']
-  avatar_url = parsed_body['avatar_url']
-  inquiring_user = User.find_by(github_id: user_github_id)
+  p avatar_url_from_github = parsed_body['avatar_url']
+  p inquiring_user = User.find_by(github_id: user_github_id)
   if inquiring_user
     session[:github_token] = user_token
     session[:github_id] = user_github_id
     session[:username] = username
+    p "$" * 100
+    p inquiring_user[:user_avatar_url] = avatar_url_from_github
+    p "*" * 100
+    inquiring_user.save
   else
     User.create(
       github_id:      user_github_id,
       username:       username,
       auth_token:     user_token,
+      user_avatar_url:     avatar_url_from_github,
       )
     session[:github_token] = user_token
     session[:github_id] = user_github_id
@@ -99,8 +104,9 @@ get '/projects' do
   @tags = Tag.all
   # @total_votes = @tag.votes.map(&:value).reduce(:+-=) #some shit like that
   if request.xhr?
-    @tags = Tag.fuzzy_search(params[:query]).includes(:project)
+    @tags = Tag.fuzzy_search(params[:query]).includes(:project => :user)
     @all_projects = @tags.map(&:project)
+    @users = @all_projects.map(&:user)
     erb :projects_bare_bones, layout: false
   else
     @tags
