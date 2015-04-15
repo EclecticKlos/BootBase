@@ -5,7 +5,11 @@ class Tag < ActiveRecord::Base
   scope :fuzzy_search, ->(query){
     query ||= ''
     query = query.downcase
-    where("lower(name) LIKE ? ","%#{query}%")
+    where("lower(name) LIKE ? ","#{query}%")
   }
+
+  def to_s
+    return "#{self.name}"
+  end
 
 end

@@ -66,6 +66,7 @@ get '/github/oauth/callback' do
   parsed_body = JSON.parse(user_info.body)
   user_github_id = parsed_body['id']
   username = parsed_body['login']
+  avatar_url = parsed_body['avatar_url']
   inquiring_user = User.find_by(github_id: user_github_id)
   if inquiring_user
     session[:github_token] = user_token
@@ -96,9 +97,10 @@ end
 get '/projects' do
   # params.inspect
   @tags = Tag.all
+  # @total_votes = @tag.votes.map(&:value).reduce(:+-=) #some shit like that
   if request.xhr?
     @tags = Tag.fuzzy_search(params[:query]).includes(:project)
-    p @all_projects = @tags.map(&:project)
+    @all_projects = @tags.map(&:project)
     erb :projects_bare_bones, layout: false
   else
     @tags
@@ -170,7 +172,20 @@ end
 
   # p data['access_token']
 
+############################ vv CHRISTINE'S SUGGESTION FOR TAG VOTING
 
+# post '/votes/:tag_id/:value' do
+
+#   @tag = Tag.find(params[:tag_id])
+#   @user = User.find(session[:id]) #find user in session
+#   if @tag.votes.map(&:user_id).excludes?(@user.id)
+#     #some code here that will create a vote
+#     Vote.create(tag_id: @tag.id, user_id: @user.id, value: params[:value]) # params[:value] == 1 or -1
+#   end
+
+# end
+
+############################ ^^ CHRISTINE'S SUGGESTION FOR TAG VOTING
 
 
 
