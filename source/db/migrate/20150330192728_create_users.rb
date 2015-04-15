@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string  :username
       t.string  :auth_token
       t.integer :github_id
+      t.string  :avatar_url
 
       t.timestamps
     end

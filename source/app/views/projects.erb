@@ -1,6 +1,6 @@
 <br>
 <form action="/projects/new" method="GET">
-<input type="submit" value="Add a Project!">
+<input type="submit" class="tagSearch" value="Add a Project!">
 </form>
 
 <h1>Project List</h1>
@@ -15,3 +15,23 @@
   <%= erb :projects_bare_bones %>
 </div>
 
+<script type="text/javascript">
+    // var tags = <%= @tags.map(&:to_s) %>;
+    // $('.tagSearch').autocomplete({
+    //   source: tags
+    // })
+</script>
+
+<script>
+         $(function() {
+            var availableTutorials = [
+               "ActionScript",
+               "Boostrap",
+               "C",
+               "C++",
+            ];
+            $( ".tagSearch" ).autocomplete({
+               source: availableTutorials
+            });
+         });
+      </script>

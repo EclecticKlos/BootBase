@@ -4,11 +4,10 @@ $(document).ready(function(){
   $('.project-search').on('keyup', function(event){
     var query = $(this).val();
     // console.log(query);
-
     searchForProjects(query)
-
-
+    // searchForMatchingKeywords(query)
   })
+
 
   searchForProjects = function(query){
     var request = $.ajax({
@@ -22,6 +21,27 @@ $(document).ready(function(){
     })
   }
 })
+
+/////////////////////  vv CHRISTINE'S SUGGESTION FOR TAG VOTING
+
+  // $('.project-search').on('entersomethingbkah', function(event){
+  //   var query = $(this).val();
+  //   // console.log(query);
+  //   searchForProjects(query)
+  // })
+
+  // searchForMatchingKeywords = function(query){
+  //   var request = $.ajax({
+  //     url: '/unique_path', //build a controller for this
+  //     type: 'GET',
+  //     data: {query: query},
+  //   });
+  //   request.done(function(projects){
+  //     $('.project-search dropdown').html(projects) //append whatever jquery dropdown on the search bar thing
+  //   })
+  // }
+/////////////////////  ^^ CHRISTINE'S SUGGESTION FOR TAG VOTING
+
 
 
 
