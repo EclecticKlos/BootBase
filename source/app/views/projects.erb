@@ -1,16 +1,30 @@
-<br>
-<form action="/projects/new" method="GET">
-<input type="submit" class="tagSearch" value="Add a Project!">
-</form>
-
-<h1>Project List</h1>
-
-<div >
-  <form action="/projects" method="GET">
-  Search Tags:<input class="project-search" type="text" />
-  <input type="submit" value="Search">
-</form>
+<div class="bootbase">
+  <h1>BootBase</h1>
 </div>
+
+  <form class="project-search">
+    <div class="row">
+      <div class="large-12 columns">
+        <div class="row collapse prefix-round">
+          <div class="large-3 columns">
+            <a href="/projects" class="button prefix">Search</a>
+          </div>
+          <div class="large-9 columns">
+            <input type="text" class="project-search" placeholder="Search tags...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+<div class="search-and-add-container">
+  <div class="row">
+    <div class="large-6 columns">
+      <a href="/projects/new" class="button round">+ Add Code Exmaple!</a>
+    </div>
+  </div>
+</div>
+
 <div class="project-search-results">
   <%= erb :projects_bare_bones %>
 </div>
@@ -21,17 +35,3 @@
     //   source: tags
     // })
 </script>
-
-<script>
-         $(function() {
-            var availableTutorials = [
-               "ActionScript",
-               "Boostrap",
-               "C",
-               "C++",
-            ];
-            $( ".tagSearch" ).autocomplete({
-               source: availableTutorials
-            });
-         });
-      </script>

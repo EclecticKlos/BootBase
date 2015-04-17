@@ -73,9 +73,9 @@ get '/github/oauth/callback' do
     session[:github_id] = user_github_id
     session[:username] = username
     p "$" * 100
-    p inquiring_user[:user_avatar_url] = avatar_url_from_github
+    # p inquiring_user[:user_avatar_url] = avatar_url_from_github
     p "*" * 100
-    inquiring_user.save
+    # inquiring_user.save
   else
     User.create(
       github_id:      user_github_id,
@@ -127,6 +127,7 @@ post '/projects' do
   project_code_url_array = params[:code_url].split('/')
   project_owner = User.find_by(github_id: session[:github_id])
   formatted_code_url = "https://api.github.com/repos/" + project_owner.username + "/" + project_code_url_array.shift + "/contents/" + project_code_url_array.join("/")
+  p "$" * 100
   p formatted_code_url
   repo_content = HTTParty.get( formatted_code_url, {
     :headers => {
@@ -134,6 +135,7 @@ post '/projects' do
       "Authorization" => "token #{session[:github_token]}"
     }
     })
+p "*" * 100
   p repo_content.body
 
   parsed_content = JSON.parse(repo_content.body)["content"]
