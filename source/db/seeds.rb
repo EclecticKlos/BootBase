@@ -17,6 +17,7 @@ contents = file.read
       tag = project.tags.create(
         name:             Faker::Lorem.word,
         relevance_vote:   (1 + rand(7)),
+        temp_user_voted:  false,
         )
     end
   end

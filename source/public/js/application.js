@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+////////////// vvv SEARCH  vvv ////////////////
+
   var responses = {};
   var pending = false;
 
@@ -9,7 +11,6 @@ $(document).ready(function(){
     searchForProjects(query)
     // searchForMatchingKeywords(query)
   })
-
 
   searchForProjects = function(query){
     if(!query) {
@@ -33,7 +34,33 @@ $(document).ready(function(){
       $('.project-search-results').html(projects)
     })
   }
+////////////// ^^^ SEARCH  ^^^ ////////////////
+
+////////////// vvv TAG VOTING  vvv ///////////////
+$('.button.round.tag.vote').on('click', function(event){
+  event.preventDefault();
+
+  var voteID = $(this).parent().attr('id')
+  var votes = $('#' + voteID + " .votes")
+
+  var request = $.ajax({
+    url:  $(this).attr("href"),
+    type: "POST",
+    data: {},
+    dataType: "json"
+  });
+
+  request.done(function(responseData){
+    votes.html(responseData.votes)
+  })
 })
+
+
+////////////// ^^^ TAG VOTING  ^^^ ///////////////
+
+
+
+})  //End of document.ready
 
 /////////////////////  vv CHRISTINE'S SUGGESTION FOR TAG VOTING
 
