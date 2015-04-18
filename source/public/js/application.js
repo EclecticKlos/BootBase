@@ -1,5 +1,7 @@
-
 $(document).ready(function(){
+
+  var responses = {};
+  var pending = false;
 
   $('.project-search').on('keyup', function(event){
     var query = $(this).val();
@@ -10,6 +12,16 @@ $(document).ready(function(){
 
 
   searchForProjects = function(query){
+    if(!query) {
+      return;
+    }
+    // have you queried for this before?(does the key exist in responses dictionary):
+    if(responses.hasOwnProperty(query)) {
+      $('.project-search-results').html(responses[query]);
+      return;
+    }
+
+    console.log("AJAX BELOW")
     var request = $.ajax({
       url: '/projects',
       type: 'GET',
@@ -17,6 +29,7 @@ $(document).ready(function(){
     });
     request.done(function(projects){
       console.log(projects)
+      responses[query] = projects;
       $('.project-search-results').html(projects)
     })
   }
