@@ -172,6 +172,21 @@ post '/projects/:id' do
   redirect "/projects/#{@this_project.id}"
 end
 
+post '/tags/:id/votes' do
+  p "@" * 100
+  tag = Tag.find(params[:id])
+  p "*" * 100
+  p tag.relevance_vote
+  tag.relevance_vote += 1
+  tag.temp_user_voted = true
+  votes = tag.relevance_vote
+  user_voted = tag.temp_user_voted
+  tag.save
+  p "$" * 100
+  p return_hash = {votes: votes, user_voted: user_voted}
+  p return_hash.to_json
+end
+
   # response = HTTParty.post(url)
   # # "access_token=cb86bf5604102c8497c0d7843c6c71e0aa14a877&scope=&token_type=bearer"
 

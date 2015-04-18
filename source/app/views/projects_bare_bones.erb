@@ -12,7 +12,7 @@
       <div class="col tag-container">
         <% project.tags.each do |tag| %>
         <div class="col tag">
-          <a href="#" class="button round tag"><%= tag.name %></a>
+          <a href="#" class="button round tag"><%= tag.name %> <%= tag.relevance_vote %></a>
         </div>
         <% end %>
       </div>

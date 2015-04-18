@@ -2,11 +2,15 @@
 
 <h3>Project Title:  <%= @this_project.title %></h3>
 
-<p><%= @this_project.description %></p>
+<p>Project description: <%= @this_project.description %></p>
 
-<% @this_projects_tags.each do |tag| %>
-<h1><%= tag.name %></h1>
-<% end %>
+<div class="col tag-container">
+  <% @this_projects_tags.each do |tag| %>
+    <div id="<%= tag.id %>">
+      <a href="/tags/<%= tag.id %>/votes" class="button round tag vote"><%= tag.name %> </a><span class='votes'><%= tag.relevance_vote %></span>
+    </div>
+  <% end %>
+</div>
 
 <form action="/projects/<%= @this_project.id %>" method="POST">
 Add a tag:
