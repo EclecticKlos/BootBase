@@ -51,7 +51,7 @@ $('.button.round.tag.vote').on('click', function(event){
   });
 
   request.done(function(responseData){
-
+    votes.html(responseData.votes)
   })
 })
 
