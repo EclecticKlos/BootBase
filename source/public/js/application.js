@@ -34,13 +34,14 @@ $(document).ready(function(){
       $('.project-search-results').html(projects)
     })
   }
-})  //End of document.ready
 
 ////////////// vvv TAG VOTING  vvv ///////////////
-$(document).ready(function(){
 
   $('.button.round.tag.vote').on('click', function(event){
     event.preventDefault();
+    var clicked_html = this;
+    var clicked_html_href = clicked_html.href
+    var just_route = clicked_html_href.replace('http://127.0.0.1:9393','')
 
     var voteID = $(this).parent().attr('id')
     var votes = $('#' + voteID + " .votes")
@@ -53,10 +54,17 @@ $(document).ready(function(){
     });
 
     request.done(function(responseData){
+      if (clicked_html.id == "no_vote"){
+        $('[href="' + just_route + '"]').attr('id','voted')
+      }
+      else if (clicked_html.id == "voted"){
+        $('[href="' + just_route + '"]').attr('id','no_vote')
+      }
       votes.html(responseData.votes)
     })
   })
-})
+})  //End of document.ready
+
 
 
 ////////////// ^^^ TAG VOTING  ^^^ ///////////////

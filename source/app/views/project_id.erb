@@ -7,7 +7,7 @@
 <div class="col tag-container">
   <% @this_projects_tags.each do |tag| %>
     <div id="<%= tag.id %>">
-      <a href="/tags/<%= tag.id %>/votes" class="button round tag vote"><%= tag.name %> </a><span class='votes'><%= tag.relevance_vote %></span>
+      <a href="/tags/<%= tag.id %>/votes" id="no_vote" class="button round tag vote"><%= tag.name %> </a><span class='votes'><%= tag.relevance_vote %></span>
     </div>
   <% end %>
 </div>

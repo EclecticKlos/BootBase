@@ -174,16 +174,15 @@ post '/projects/:id' do
 end
 
 post '/tags/:id/votes' do
-  p "@" * 100
   tag = Tag.find(params[:id])
+  # if tag.
   p "*" * 100
   p tag.relevance_vote
   tag.relevance_vote += 1
   votes = tag.relevance_vote
   tag.save
-  p "$" * 100
-  p return_hash = {votes: votes}
-  p return_hash.to_json
+  return_hash = {votes: votes}
+  return_hash.to_json
 end
 
   # response = HTTParty.post(url)
