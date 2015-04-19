@@ -16,8 +16,12 @@ contents = file.read
     2.times do
       tag = project.tags.create(
         name:             Faker::Lorem.word,
-        relevance_vote:   (1 + rand(7)),
         )
+      (rand(3)).times do
+        tag.votes.create(
+          user_id:       user.id,
+          )
+      end
     end
   end
 end
