@@ -22,7 +22,6 @@ $(document).ready(function(){
       return;
     }
 
-    console.log("AJAX BELOW")
     var request = $.ajax({
       url: '/projects',
       type: 'GET',
@@ -40,11 +39,11 @@ $(document).ready(function(){
   $('.button.round.tag.vote').on('click', function(event){
     event.preventDefault();
     var clicked_html = this;
-    var clicked_html_href = clicked_html.href
-    var just_route = clicked_html_href.replace('http://127.0.0.1:9393','')
-
-    var voteID = $(this).parent().attr('id')
-    var votes = $('#' + voteID + " .votes")
+    var clicked_html_href = clicked_html.href;
+    var just_route = clicked_html_href.replace('http://127.0.0.1:9393','');
+    var voteID = $(this).parent().attr('id');
+    var votes = $('#' + voteID + " .votes");
+    var countChange = 0;
 
     var request = $.ajax({
       url:  $(this).attr("href"),
@@ -56,6 +55,8 @@ $(document).ready(function(){
     request.done(function(responseData){
       if (clicked_html.id == "no_vote"){
         $('[href="' + just_route + '"]').attr('id','voted')
+        console.log($('.votes').html(responseData.count))
+        // $('.votes').html(responseData.count.to_i)
       }
       else if (clicked_html.id == "voted"){
         $('[href="' + just_route + '"]').attr('id','no_vote')

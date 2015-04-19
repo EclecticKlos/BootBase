@@ -69,6 +69,7 @@ get '/github/oauth/callback' do
   p avatar_url_from_github = parsed_body['avatar_url']
   p inquiring_user = User.find_by(github_id: user_github_id)
   if inquiring_user
+    session[:user_id] = inquiring_user.id
     session[:github_token] = user_token
     session[:github_id] = user_github_id
     session[:username] = username
@@ -175,13 +176,23 @@ end
 
 post '/tags/:id/votes' do
   tag = Tag.find(params[:id])
-  # if tag.
   p "*" * 100
-  p tag.relevance_vote
-  tag.relevance_vote += 1
-  votes = tag.relevance_vote
-  tag.save
-  return_hash = {votes: votes}
+  p tag.votes
+  p "*" * 100
+  if tag.votes.where(user_id: session[:user_id]).length > 0
+    delete_me = tag.votes.where(user_id: session[:user_id])
+    p "&" * 100
+    p delete_me
+    p "BEFORE THE DELETE"
+    p delete_me
+    tag.votes.destroy(delete_me)
+    p "AFTER THE DELETE"
+    p delete_me
+  else
+    User.find(session[:user_id].tag.votes
+  end
+  vote_count = tag.votes.count
+  return_hash = {count: vote_count}
   return_hash.to_json
 end
 
