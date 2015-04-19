@@ -1,6 +1,7 @@
 class Tag < ActiveRecord::Base
-
-  belongs_to :project
+  has_many  :projects_tags
+  has_many  :votes
+  has_many  :projects, :through => :projects_tags
 
   scope :fuzzy_search, ->(query){
     query ||= ''
