@@ -25,38 +25,12 @@
   flex-direction: column;
 }
 
-/*.row.project-container {
-  height: 112px;
-}
-
-.col.profile-pic {
-
-}*/
-
 .profile-pic-img {
   width: 112px;
   height: 112px;
   float: left;
   display: inline-block;
 }
-
-/*.project_title a:link {
-  display: inline;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.1em;
-  color: #008CBA;
-  text-decoration: none;
-  vertical-align: top;
-}
-
-.project_title a:visited {
-  color: #000000;
-  text-decoration: none;
-  display: inline;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1em;
-  vertical-align: top;
-}*/
 
 .col username {
   color: #008CBA;
@@ -84,13 +58,23 @@
   padding-left: 5px;
 }
 
-.button.round.tag.vote {
+#no_vote.button.round.tag {
   display: inline-flex;
   background-color: #00bfc6;
   height: 53px;
   width: auto;
   text-align: left;
   padding-left: 5px;
+}
+
+#voted.button.round.tag {
+  display: inline-flex;
+  background-color: #00bfc6;
+  height: 53px;
+  width: auto;
+  text-align: left;
+  padding-left: 5px;
+  background-color: red;
 }
 
 .votes {
