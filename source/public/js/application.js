@@ -34,10 +34,8 @@ $(document).ready(function(){
       $('.project-search-results').html(projects)
     })
   }
-})  //End of document.ready
 
 ////////////// vvv TAG VOTING  vvv ///////////////
-$(document).ready(function(){
 
   $('.button.round.tag.vote').on('click', function(event){
     event.preventDefault();
@@ -56,7 +54,8 @@ $(document).ready(function(){
       votes.html(responseData.votes)
     })
   })
-})
+})  //End of document.ready
+
 
 
 ////////////// ^^^ TAG VOTING  ^^^ ///////////////
