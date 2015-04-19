@@ -106,6 +106,7 @@ get '/projects' do
   if request.xhr?
     @tags = Tag.fuzzy_search(params[:query]).includes(:project => :user)
     @all_projects = @tags.map(&:project)
+    p @all_projects
     @users = @all_projects.map(&:user)
     erb :projects_bare_bones, layout: false
   else
@@ -178,12 +179,10 @@ post '/tags/:id/votes' do
   p "*" * 100
   p tag.relevance_vote
   tag.relevance_vote += 1
-  tag.temp_user_voted = true
   votes = tag.relevance_vote
-  user_voted = tag.temp_user_voted
   tag.save
   p "$" * 100
-  p return_hash = {votes: votes, user_voted: user_voted}
+  p return_hash = {votes: votes}
   p return_hash.to_json
 end
 

@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
-  has_many :tags
-  belongs_to :user
+  belongs_to  :user
+  has_many    :projects_tags
+  has_many    :tags, :through => :projects_tags
 end

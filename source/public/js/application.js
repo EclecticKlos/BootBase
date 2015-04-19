@@ -34,24 +34,27 @@ $(document).ready(function(){
       $('.project-search-results').html(projects)
     })
   }
-////////////// ^^^ SEARCH  ^^^ ////////////////
+})  //End of document.ready
 
 ////////////// vvv TAG VOTING  vvv ///////////////
-$('.button.round.tag.vote').on('click', function(event){
-  event.preventDefault();
+$(document).ready(function(){
 
-  var voteID = $(this).parent().attr('id')
-  var votes = $('#' + voteID + " .votes")
+  $('.button.round.tag.vote').on('click', function(event){
+    event.preventDefault();
 
-  var request = $.ajax({
-    url:  $(this).attr("href"),
-    type: "POST",
-    data: {},
-    dataType: "json"
-  });
+    var voteID = $(this).parent().attr('id')
+    var votes = $('#' + voteID + " .votes")
 
-  request.done(function(responseData){
-    votes.html(responseData.votes)
+    var request = $.ajax({
+      url:  $(this).attr("href"),
+      type: "POST",
+      data: {},
+      dataType: "json"
+    });
+
+    request.done(function(responseData){
+      votes.html(responseData.votes)
+    })
   })
 })
 
@@ -60,7 +63,6 @@ $('.button.round.tag.vote').on('click', function(event){
 
 
 
-})  //End of document.ready
 
 /////////////////////  vv CHRISTINE'S SUGGESTION FOR TAG VOTING
 
