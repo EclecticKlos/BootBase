@@ -42,8 +42,6 @@ $(document).ready(function(){
     var clicked_html_href = clicked_html.href;
     var just_route = clicked_html_href.replace('http://127.0.0.1:9393','');
     var voteID = $(this).parent().attr('id');
-    var votes = $('#' + voteID + " .votes");
-    var countChange = 0;
 
     var request = $.ajax({
       url:  $(this).attr("href"),
@@ -55,13 +53,13 @@ $(document).ready(function(){
     request.done(function(responseData){
       if (clicked_html.id == "no_vote"){
         $('[href="' + just_route + '"]').attr('id','voted')
-        console.log($('.votes').html(responseData.count))
+        $('#vote-'+ voteID).html(responseData.vote_count)
         // $('.votes').html(responseData.count.to_i)
       }
       else if (clicked_html.id == "voted"){
         $('[href="' + just_route + '"]').attr('id','no_vote')
+        $('#vote-'+ voteID).html(responseData.vote_count)
       }
-      votes.html(responseData.votes)
     })
   })
 })  //End of document.ready

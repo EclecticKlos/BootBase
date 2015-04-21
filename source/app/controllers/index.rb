@@ -160,6 +160,7 @@ end
 
 
 get '/projects/:id' do
+  @user_id = session[:user_id]
   @this_project = Project.find(params[:id])
   @this_projects_tags = @this_project.tags
   @html = CodeRay.scan(@this_project.user_project_code, :ruby).div(:line_numbers => :table)
@@ -175,18 +176,22 @@ post '/projects/:id' do
 end
 
 post '/tags/:id/votes' do
-  p "@" * 100
-  p params[:id]
-  p Vote.all
-  if Vote.find(tag_id: params[:id])
-    p "*" * 100
-    p "YESsSSSSSSSSSSSSSSSS"
+  this_vote = Vote.where(tag_id: params[:id], user_id: session[:user_id])
+  if this_vote.count == 0
+    p "VOTE COUNT BEFORE CREATE"
+    Vote.create(tag_id: params[:id], user_id: session[:user_id])
+    p this_vote.count
+    p "VOTE COUNT AFTER CREATE"
+    p this_vote.count
   else
-    p "$" * 100
-    p "NOOOOOOO"
+    p "VOTE COUNT BEFORE DELETE"
+    p this_vote.count
+    this_vote.first.destroy
+    p "VOTE COUNT AFTER DELETE"
+    p this_vote.count
   end
-
-  return_hash = {count: tag.votes.count}
+  totes_votes_mcgoats = Vote.where(tag_id: params[:id])
+  return_hash = {vote_count: totes_votes_mcgoats.count}
   return_hash.to_json
 end
 
