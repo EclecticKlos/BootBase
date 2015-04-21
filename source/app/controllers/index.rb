@@ -160,6 +160,7 @@ end
 
 
 get '/projects/:id' do
+  @user_id = session[:user_id]
   @this_project = Project.find(params[:id])
   @this_projects_tags = @this_project.tags
   @html = CodeRay.scan(@this_project.user_project_code, :ruby).div(:line_numbers => :table)
@@ -175,26 +176,64 @@ post '/projects/:id' do
 end
 
 post '/tags/:id/votes' do
-  tag = Tag.find(params[:id])
-  p "*" * 100
-  p tag.votes
-  p "*" * 100
-  if tag.votes.where(user_id: session[:user_id]).length > 0
-    delete_me = tag.votes.where(user_id: session[:user_id])
-    p "&" * 100
-    p delete_me
-    p "BEFORE THE DELETE"
-    p delete_me
-    tag.votes.destroy(delete_me)
-    p "AFTER THE DELETE"
-    p delete_me
+  this_vote = Vote.where(tag_id: params[:id], user_id: session[:user_id])
+  if this_vote.count == 0
+    p "VOTE COUNT BEFORE CREATE"
+    Vote.create(tag_id: params[:id], user_id: session[:user_id])
+    p this_vote.count
+    p "VOTE COUNT AFTER CREATE"
+    p this_vote.count
   else
-    User.find(session[:user_id].tag.votes
+    p "VOTE COUNT BEFORE DELETE"
+    p this_vote.count
+    this_vote.first.destroy
+    p "VOTE COUNT AFTER DELETE"
+    p this_vote.count
   end
-  vote_count = tag.votes.count
-  return_hash = {count: vote_count}
+  totes_votes_mcgoats = Vote.where(tag_id: params[:id])
+  return_hash = {vote_count: totes_votes_mcgoats.count}
   return_hash.to_json
 end
+
+
+################## ATTEMPTING TO UNFUCK MY FUCKING AJAX
+
+  # tag = Tag.find(params[:id])
+  # p tag.votes
+  # p "*" * 100
+  # p tag.votes #.where(user_id: session[:user_id]).length
+  # p "USER USER USER USER USER"
+  # p session[:user_id]
+  # if tag.votes.where(user_id: session[:user_id]).length > 0
+  #   delete_me = Vote.find(tag_id: tag.id)
+  #   p "&" * 100
+  #   p delete_me
+  #   p "BEFORE THE DELETE"
+  #   p delete_me
+  #   Vote.destroy(delete_me)
+  #   p "AFTER THE DELETE"
+  #   p delete_me
+  # else
+  #   Vote.create(tag_id: tag.id, user_id: session[:user_id])
+  #   # User.find(session[:user_id].tag.votes)
+  # end
+  # p "$" * 100
+  # p tag.votes.count
+  # p "$" * 100
+  # return_hash = {count: tag.votes.count}
+  # return_hash.to_json
+
+
+
+####################### ATTEMPTING TO UNFUCK MY FUCKING AJAX
+
+
+
+
+
+
+
+
 
   # response = HTTParty.post(url)
   # # "access_token=cb86bf5604102c8497c0d7843c6c71e0aa14a877&scope=&token_type=bearer"
