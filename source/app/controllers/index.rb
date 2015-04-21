@@ -105,8 +105,8 @@ get '/projects' do
   @tags = Tag.all
   # @total_votes = @tag.votes.map(&:value).reduce(:+-=) #some shit like that
   if request.xhr?
-    @tags = Tag.fuzzy_search(params[:query]).includes(:project => :user)
-    @all_projects = @tags.map(&:project)
+    @tags = Tag.fuzzy_search(params[:query]).includes(:projects => :user)
+    @all_projects = @tags.map(&:projects).flatten.uniq
     p @all_projects
     @users = @all_projects.map(&:user)
     erb :projects_bare_bones, layout: false
@@ -163,7 +163,8 @@ get '/projects/:id' do
   @user_id = session[:user_id]
   @this_project = Project.find(params[:id])
   @this_projects_tags = @this_project.tags
-  @html = CodeRay.scan(@this_project.user_project_code, :ruby).div(:line_numbers => :table)
+  # @html = CodeRay.scan(@this_project.user_project_code, :ruby).div(:line_numbers => :table)
+  @html = @this_project.user_project_code
 
   erb :project_id
 end
@@ -178,17 +179,9 @@ end
 post '/tags/:id/votes' do
   this_vote = Vote.where(tag_id: params[:id], user_id: session[:user_id])
   if this_vote.count == 0
-    p "VOTE COUNT BEFORE CREATE"
     Vote.create(tag_id: params[:id], user_id: session[:user_id])
-    p this_vote.count
-    p "VOTE COUNT AFTER CREATE"
-    p this_vote.count
   else
-    p "VOTE COUNT BEFORE DELETE"
-    p this_vote.count
     this_vote.first.destroy
-    p "VOTE COUNT AFTER DELETE"
-    p this_vote.count
   end
   totes_votes_mcgoats = Vote.where(tag_id: params[:id])
   return_hash = {vote_count: totes_votes_mcgoats.count}

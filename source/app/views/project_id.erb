@@ -1,4 +1,6 @@
 <a href="/projects"><--Return to projects</a>
+<script>hljs.initHighlightingOnLoad();</script>
+
 
 <h3>Project Title:  <%= @this_project.title %></h3>
 
@@ -23,6 +25,8 @@ Add a tag:
 <input type="submit" value="Add a tag">
 
 <div class="code">
-  <%= @html %>
+  <body>
+    <pre><code><%= @html %></pre></code>
+  </body>
 </div>
 
