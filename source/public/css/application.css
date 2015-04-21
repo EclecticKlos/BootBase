@@ -1,7 +1,13 @@
-.bootbase h1 {
+/** {
+  border: 1px solid #000000;
+}*/
+
+.bootbase {
   font-family: 'Open Sans', sans-serif;
   font-size: 5em;
   font-weight: bold;
+  height: auto;
+  overflow: visible;
   /*text-transform: uppercase;*/
 }
 
@@ -79,6 +85,11 @@
 
 .votes {
   display: inline-flex;
+}
+
+.logout {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 
