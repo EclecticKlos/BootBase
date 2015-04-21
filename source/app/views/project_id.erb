@@ -4,8 +4,6 @@
 
 <h3>Project Title:  <%= @this_project.title %></h3>
 
-<p>Project description: <%= @this_project.description %></p>
-
 <div class="col tag-container">
   <% @this_projects_tags.each do |tag| %>
     <div id="<%= tag.id %>">

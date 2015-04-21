@@ -188,6 +188,11 @@ post '/tags/:id/votes' do
   return_hash.to_json
 end
 
+get '/logout' do
+  session.clear
+  redirect '/'
+end
+
 
 ################## ATTEMPTING TO UNFUCK MY FUCKING AJAX
 
