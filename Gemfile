@@ -29,7 +29,6 @@ end
 
 group :test, :development do
   gem 'faker'
-  gem 'byebug'
   gem 'dotenv'
   gem 'pry-debugger'
 end
