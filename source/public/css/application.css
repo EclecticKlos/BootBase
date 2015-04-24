@@ -2,7 +2,8 @@
   border: 1px solid #000000;
 }*/
 
-.bootbase {
+.brand {
+  display: flex;
   font-family: 'Open Sans', sans-serif;
   font-size: 5em;
   font-weight: bold;
@@ -11,24 +12,60 @@
   /*text-transform: uppercase;*/
 }
 
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.project-search-results {
+/*  display: flex;
+  justify-content: center;
+  flex-direction: column;*/
+}
+
+.search-and-add-container {
+  padding-bottom: 20px;
+}
+
+.project-search {
+  width: 50%;
+}
+
+input[type=text].search-box {
+  border-radius: 15px
+}
+
+/*title-username-tag-container*/
+
+.project-container {
+  display: flex;
+}
+
 .code {
   height: 65vh;
   /*width: 1200px;*/
   overflow-y: scroll;
 }
 
-.project-search {
+/*.project-search {
   display: block;
+}*/
+
+.add_example_button {
+  color: white;
+  background-color: #43AC6A;
+  border-radius: 50px;
+  padding: 14px
+}
+
+.add_example_button:hover {
+  color: white;
 }
 
 .button.round {
-  background-color: #43AC6A;
-}
-
-.search-and-add-container {
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
+  background-color: ;
 }
 
 .profile-pic-img {
@@ -38,21 +75,54 @@
   display: inline-block;
 }
 
-.col username {
+.username {
+  display: flex;
   color: #008CBA;
   text-decoration: none;
+  padding-bottom: 1vh;
 }
 
-.col.tag-container {
-    display: inline-flex;
-    justify-content: flex-start;
-    flex-direction: row;
-    height: 53px;
+.tag-container {
+  display: inline-flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 2vh;
 }
 
-.col.tag {
+.individual-tag-container {
   /*padding: 5px;*/
   height: auto;
+}
+
+
+.tag {
+  color: white;
+  background-color: #008CBA;
+  border-radius: 10px;
+  margin-right: 1vh;
+  padding: 1vh;
+}
+
+/*a {
+  cursor: default;
+}*/
+
+a.tag:link {
+  cursor: default;
+  color: white;
+}
+
+a.tag:hover {
+  cursor: default;
+  color: white;
+}
+
+.username {
+  height: 1em;
+}
+
+a.username {
+  padding-bottom: 1em;
 }
 
 .button.round.tag {
@@ -83,10 +153,10 @@
   background-color: red;
 }
 
-.votes {
+/*.votes {
   display: inline-flex;
 }
-
+*/
 .logout {
   display: flex;
   flex-direction: row-reverse;
