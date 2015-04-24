@@ -13,7 +13,7 @@ get '/login-via-github' do
   url.query = {
     client_id: ENV['GITHUB_CLIENT_ID'],
     # redirect_uri: to('/github/oauth/callback'),
-    redirect_uri: ('http://127.0.0.1:9393/github/oauth/callback'),
+    redirect_uri: ('/github/oauth/callback'),
     scope: scopes_desired,
     state: session['github_oauth_state'],
   }.to_param
