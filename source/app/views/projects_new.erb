@@ -1,9 +1,21 @@
 <div class="create-project-container">
   <form action="/projects" method="POST">
+  <div class="steps">Step 1: What does your project do?</div>
   <input class="project-title-box" type="text" name="project_title" placeholder="Project title"> <br>
-  <input class="project-code-url-box" type="text" name="code_url" placeholder="Project code URL"><br>
+  <div class="steps">Step 2: Link to your project file</div>
+  <img class="directions-pic" src="/resources/directions-pic.png">
 
-  <img class="directions-pic" src="~/BootBase/source/public/resources/directions-pic.png">
-  <input class="add-project-button" type="submit" value="Add your project">
+  <div class="see-code-container">
+    <input class="project-code-url-box" type="text" name="code_url" placeholder="Project code URL">
+    <a href="" class="example-code-submit">See code</a>
+  </div>
+
+  <div class="example_code">
+    <body>
+      <pre><code></pre></code>
+    </body>
+  </div>
+
+  <input class="add-project-button" type="submit" value="Add your project!">
 </div>
 
