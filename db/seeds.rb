@@ -1,6 +1,6 @@
 require 'faker'
-file = File.open("/Users/apprentice/Desktop/klos/BootBase/source/app/controllers/index.rb")
-contents = file.read
+# file = File.open("/Users/apprentice/Desktop/klos/BootBase/source/app/controllers/index.rb")
+# contents = file.read
 
 10.times do
   user = User.create(
