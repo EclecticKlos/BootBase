@@ -161,6 +161,26 @@ a.username {
   outline: 0;
 }
 
+.steps {
+  color: #626262;
+  font-size: 2em;
+  font-weight: normal;
+}
+
+.see-code-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.example-code-submit {
+  color: white;
+  background-color: gray;
+  border-radius: 50px;
+  padding: 10px;
+  text-decoration: none;
+  border: 0;
+}
+
 .add-project-button {
   color: white;
   background-color: #0ACF00;
@@ -223,6 +243,7 @@ a.username {
   height: 2em;
   width: 35em;
   margin-bottom: 7px;
+  outline: 0;
 }
 
 .add-tag-button {

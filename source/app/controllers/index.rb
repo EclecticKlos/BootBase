@@ -116,19 +116,17 @@ end
 #   #From copy button:          BootBase/source/app/controllers/index.rb
 #   #Needed for API:            BootBase/contents/source/app/controllers/index.rb
 # "https://api.github.com/repos/EclecticKlos/BootBase/contents/source/app/controllers/index.rb"
+
 post '/projects' do
   project_code_url_array = params[:code_url].split('/')
   project_owner = User.find_by(github_id: session[:github_id])
   formatted_code_url = "https://api.github.com/repos/" + project_owner.username + "/" + project_code_url_array.shift + "/contents/" + project_code_url_array.join("/")
-  p "$" * 100
-  p formatted_code_url
   repo_content = HTTParty.get( formatted_code_url, {
     :headers => {
       "User-Agent" => "BootBase",
       "Authorization" => "token #{session[:github_token]}"
     }
-    })
-p "*" * 100
+  })
   p repo_content.body
 
   parsed_content = JSON.parse(repo_content.body)["content"]
@@ -149,6 +147,23 @@ p "*" * 100
   end
 end
 
+get '/html_code_example' do
+  project_code_url_array = params[:code].split('/')
+  project_owner = User.find_by(github_id: session[:github_id])
+  formatted_code_url = "https://api.github.com/repos/" + project_owner.username + "/" + project_code_url_array.shift + "/contents/" + project_code_url_array.join("/")
+  # p project_code_url_array
+  repo_content = HTTParty.get( formatted_code_url, {
+    :headers => {
+      "User-Agent" => "BootBase",
+      "Authorization" => "token #{session[:github_token]}"
+    }
+  })
+
+  parsed_content = JSON.parse(repo_content.body)["content"]
+  decoded_content = Base64.decode64(parsed_content)
+  p "$" * 100
+  decoded_content.to_json
+end
 
 get '/projects/:id' do
   @user_id = session[:user_id]

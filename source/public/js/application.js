@@ -5,15 +5,21 @@ $(document).ready(function(){
   var responses = {};
   var pending = false;
 
+  var searchTimeout;
   $('.project-search').on('keyup', function(event){
     // event.preventDefault
-    var query = $(this).val();
+    var query = $(this).find('.search-box').val();
     // console.log(query);
-    searchForProjects(query)
+
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(function(){
+      searchForProjects(query);
+    }, 300);
     // searchForMatchingKeywords(query)
   })
 
-  searchForProjects = function(query){
+  var LAST_SEARCH_REQUEST;
+  var searchForProjects = function(query){
     // if(!query) {
     //   return;
     // }
@@ -23,11 +29,18 @@ $(document).ready(function(){
     //   return;
     // }
 
+    if (LAST_SEARCH_REQUEST){
+      console.log('aborting last request');
+      LAST_SEARCH_REQUEST.abort()
+      LAST_SEARCH_REQUEST = null;
+    }
+
     var request = $.ajax({
       url: '/projects',
       type: 'GET',
       data: {query: query},
     });
+    LAST_SEARCH_REQUEST = request;
     request.done(function(projects){
       console.log(projects)
       responses[query] = projects;
@@ -58,11 +71,32 @@ $(document).ready(function(){
       voteButton.find('.tag-vote-count').text(responseData.vote_count);
     })
   })
+
+////////////// ^^^ TAG VOTING  ^^^ ///////////////
+
+////////////// vvv DISPLAY EXAMPLE CODE  vvv ///////////////
+  $('.example-code-submit').on('click', function(event){
+    event.preventDefault();
+    code_URL = $('.project-code-url-box').val()
+
+    var request = $.ajax({
+      url:  '/html_code_example',
+      type: "GET",
+      data: {code: code_URL},
+      dataType: "json"
+    });
+    request.done(function(responseData){
+      console.log(responseData)
+      $('code').text(responseData);
+    })
+  })
+
+
+
 })  //End of document.ready
 
 
 
-////////////// ^^^ TAG VOTING  ^^^ ///////////////
 
 
 
