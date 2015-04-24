@@ -6,6 +6,7 @@ $(document).ready(function(){
   var pending = false;
 
   $('.project-search').on('keyup', function(event){
+    // event.preventDefault
     var query = $(this).val();
     // console.log(query);
     searchForProjects(query)
@@ -13,14 +14,14 @@ $(document).ready(function(){
   })
 
   searchForProjects = function(query){
-    if(!query) {
-      return;
-    }
-    // have you queried for this before?(does the key exist in responses dictionary):
-    if(responses.hasOwnProperty(query)) {
-      $('.project-search-results').html(responses[query]);
-      return;
-    }
+    // if(!query) {
+    //   return;
+    // }
+    // // have you queried for this before?(does the key exist in responses dictionary):
+    // if(responses.hasOwnProperty(query)) {
+    //   $('.project-search-results').html(responses[query]);
+    //   return;
+    // }
 
     var request = $.ajax({
       url: '/projects',
@@ -36,30 +37,25 @@ $(document).ready(function(){
 
 ////////////// vvv TAG VOTING  vvv ///////////////
 
-  $('.button.round.tag.vote').on('click', function(event){
+  $('.vote').on('click', function(event){
     event.preventDefault();
     var clicked_html = this;
     var clicked_html_href = clicked_html.href;
     var just_route = clicked_html_href.replace('http://127.0.0.1:9393','');
-    var voteID = $(this).parent().attr('id');
+    var voteButton = $(this);
+    var voteID = voteButton.parent().attr('id');
 
     var request = $.ajax({
-      url:  $(this).attr("href"),
+      url:  voteButton.attr("href"),
       type: "POST",
       data: {},
       dataType: "json"
     });
 
     request.done(function(responseData){
-      if (clicked_html.id == "no_vote"){
-        $('[href="' + just_route + '"]').attr('id','voted')
-        $('#vote-'+ voteID).html(responseData.vote_count)
-        // $('.votes').html(responseData.count.to_i)
-      }
-      else if (clicked_html.id == "voted"){
-        $('[href="' + just_route + '"]').attr('id','no_vote')
-        $('#vote-'+ voteID).html(responseData.vote_count)
-      }
+      var idValue = (clicked_html.id == "no_vote") ? 'voted' : 'no_vote';
+      $('[href="' + just_route + '"]').attr('id',idValue);
+      voteButton.find('.tag-vote-count').text(responseData.vote_count);
     })
   })
 })  //End of document.ready

@@ -3,20 +3,20 @@
       <div class="profile-pic">
         <img class="profile-pic-img" src="<%= project.user.user_avatar_url %>">
       </div>
-        <div class="title-username-tag-container">
-          <div class="project-title">
-            <h3><a href="/projects/<%= project.id %>"><%= project.title %></a></h3>
+      <div class="title-username-tag-container">
+        <div class="project-title">
+          <a class="title" href="/projects/<%= project.id %>"><%= project.title %></a>
+        </div>
+        <div class="username">
+          <a class="username"><%= project.user.username %></a>
+        </div>
+        <div class="tag-container">
+          <% project.tags.each do |tag| %>
+          <div class="individual-tag-container">
+            <a class="tag"><%= tag.name %> <%= tag.votes.length %></a>
           </div>
-          <div class="username">
-            <a class="username"><%= project.user.username %></a>
-          </div>
-          <div class="tag-container">
-            <% project.tags.each do |tag| %>
-            <div class="individual-tag-container">
-              <a class="tag"><%= tag.name %> <%= tag.votes.length %></a>
-            </div>
-            <% end %>
-          </div>
+          <% end %>
+        </div>
       </div>
     </div>
 <% end %>
