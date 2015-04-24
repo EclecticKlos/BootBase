@@ -1,12 +1,9 @@
-<br>
-<form action="/projects" method="POST">
-Project title:
-<input type="text" name="project_title"> <br>
-Project code url:
-<input type="text" name="code_url"><br>
-<input type="submit" value="Add your project">
+<div class="create-project-container">
+  <form action="/projects" method="POST">
+  <input class="project-title-box" type="text" name="project_title" placeholder="Project title"> <br>
+  <input class="project-code-url-box" type="text" name="code_url" placeholder="Project code URL"><br>
 
-<br>
-<br>
-<br>
-<p>[  This is where the code from the github repo will go]</p>
+  <img class="directions-pic" src="~/BootBase/source/public/resources/directions-pic.png">
+  <input class="add-project-button" type="submit" value="Add your project">
+</div>
+

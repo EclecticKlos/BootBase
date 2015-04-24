@@ -3,18 +3,8 @@ require 'json'
 require 'coderay'
 
 get '/' do
-######################## implement with bcrypt
-  # if session[:user_id]
-  #   erb :project_list
-  # else
-  #   erb :login
-  # erb :login
   erb :login
 end
-
-######################## Implement signup
-# post 'signup' do
-# end
 
 
 get '/login-via-github' do
@@ -107,6 +97,7 @@ get '/projects' do
   if request.xhr?
     @tags = Tag.fuzzy_search(params[:query]).includes(:projects => :user)
     @all_projects = @tags.map(&:projects).flatten.uniq
+    p "$" * 100
     p @all_projects
     @users = @all_projects.map(&:user)
     erb :projects_bare_bones, layout: false

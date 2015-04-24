@@ -1,26 +1,34 @@
 <a href="/projects"><--Return to projects</a>
 <script>hljs.initHighlightingOnLoad();</script>
 
+<p class="project-title"> Project Title:<%= @this_project.title %></p>
 
-<h3>Project Title:  <%= @this_project.title %></h3>
 
-<div class="col tag-container">
-  <% @this_projects_tags.each do |tag| %>
-    <div id="<%= tag.id %>">
-      <% if Vote.where(tag_id: tag.id, user_id: @user_id).count == 1 %>
-        <% this_id = "voted" %>
-        <% else %>
-        <% this_id = "no_vote" %>
-      <% end %>
-      <a href="/tags/<%= tag.id %>/votes" id="<%= this_id %>" class="button round tag vote"><%= tag.name %></a><span id='vote-<%= tag.id %>'><%= tag.votes.length %></span>
-    </div>
-  <% end %>
+<div class="project-id-page-container">
+  <div class="voting-tag-container">
+    <% @this_projects_tags.each do |tag| %>
+      <div id="<%= tag.id %>">
+        <% if Vote.where(tag_id: tag.id, user_id: @user_id).count == 1 %>
+          <% this_id = "voted" %>
+          <% else %>
+          <% this_id = "no_vote" %>
+        <% end %>
+        <a href="/tags/<%= tag.id %>/votes" id="<%= this_id %>" class="vote">
+          <span class='tag-name'><%= tag.name %></span>
+          &nbsp;
+          <span class='tag-vote-count'><%= tag.votes.length %></span>
+        </a>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="add-tag">
+    <form action="/projects/<%= @this_project.id %>" method="POST">
+    <input class="add-tag-box" type="text" name="new_tag" placeholder="Add a helpful search term...">
+    <input class="add-tag-button" type="submit" value="+ Add a tag">
+  </div>
 </div>
 
-<form action="/projects/<%= @this_project.id %>" method="POST">
-Add a tag:
-<input type="text" name="new_tag"> <br>
-<input type="submit" value="Add a tag">
 
 <div class="code">
   <body>
