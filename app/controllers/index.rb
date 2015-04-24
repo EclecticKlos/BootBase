@@ -1,6 +1,4 @@
-require 'byebug'
 require 'json'
-require 'coderay'
 
 get '/' do
   erb :login
